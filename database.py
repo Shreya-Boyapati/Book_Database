@@ -88,6 +88,7 @@ window = Tk()
 
 window.wm_title('Booklist')
 
+# create labels for commands
 l1 = Label(window, text="Title")
 l1.grid(row=0, column=0)
 
@@ -100,6 +101,7 @@ l3.grid(row=1, column=0)
 l4 = Label(window, text="ISBN")
 l4.grid(row=1, column=2)
 
+# create text for command buttons
 title_text = StringVar()
 e1 = Entry(window, textvariable=title_text)
 e1.grid(row=0, column=1)
@@ -116,6 +118,7 @@ isbn_text = StringVar()
 e4 = Entry(window, textvariable=isbn_text)
 e4.grid(row=1, column=3)
 
+# create and configure listbox
 list1 = Listbox(window, height=6, width=35)
 list1.grid(row=2, column=0, rowspan=6, columnspan=2)
 
@@ -127,6 +130,7 @@ sb1.configure(command=list1.yview)
 
 list1.bind('<<ListboxSelect>>', get_selected_row)
 
+# create buttons and map to functions
 b1 = Button(window, text="View All", width=12, command=view_command)
 b1.grid(row=2, column=3)
 
