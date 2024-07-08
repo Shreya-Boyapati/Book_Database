@@ -1,6 +1,22 @@
 from tkinter import *
 import sqlite3
 
+def get_selected_row(event):
+    try:
+        global selected_tuple
+        index = list1.curselection()[0]
+        selected_tuple = list1.get(index)    
+        e1.delete(0, END)
+        e1.insert(END, selected_tuple[1])
+        e2.delete(0, END)
+        e2.insert(END, selected_tuple[2])
+        e3.delete(0, END)
+        e3.insert(END, selected_tuple[3])
+        e4.delete(0, END)
+        e4.insert(END, selected_tuple[4])
+    except IndexError:
+        pass
+
 def connect():
     conn = sqlite3.connect("books.db")
     cur = conn.cursor()
@@ -47,22 +63,6 @@ def update(id, title, author, year, isbn):
 
 connect()
 
-def get_selected_row(event):
-    try:
-        global selected_tuple
-        index = list1.curselection()[0]
-        selected_tuple = list1.get(index)    
-        e1.delete(0, END)
-        e1.insert(END, selected_tuple[1])
-        e2.delete(0, END)
-        e2.insert(END, selected_tuple[2])
-        e3.delete(0, END)
-        e3.insert(END, selected_tuple[3])
-        e4.delete(0, END)
-        e4.insert(END, selected_tuple[4])
-    except IndexError:
-        pass
-
 def view_command():
     list1.delete(0, END)
     for row in view():
@@ -88,7 +88,6 @@ window = Tk()
 
 window.wm_title('Booklist')
 
-# create labels for commands
 l1 = Label(window, text="Title")
 l1.grid(row=0, column=0)
 
@@ -101,7 +100,6 @@ l3.grid(row=1, column=0)
 l4 = Label(window, text="ISBN")
 l4.grid(row=1, column=2)
 
-# create text for command buttons
 title_text = StringVar()
 e1 = Entry(window, textvariable=title_text)
 e1.grid(row=0, column=1)
@@ -118,7 +116,6 @@ isbn_text = StringVar()
 e4 = Entry(window, textvariable=isbn_text)
 e4.grid(row=1, column=3)
 
-# create and configure listbox
 list1 = Listbox(window, height=6, width=35)
 list1.grid(row=2, column=0, rowspan=6, columnspan=2)
 
@@ -130,7 +127,6 @@ sb1.configure(command=list1.yview)
 
 list1.bind('<<ListboxSelect>>', get_selected_row)
 
-# create buttons and map to functions
 b1 = Button(window, text="View All", width=12, command=view_command)
 b1.grid(row=2, column=3)
 
